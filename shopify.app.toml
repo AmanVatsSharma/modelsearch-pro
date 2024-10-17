@@ -1,0 +1,41 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "c08a203cd4c23059ac860df3ebd73d99"
+application_url = "https://why-killing-colors-ink.trycloudflare.com"
+embedded = true
+name = "modelsearch-pro"
+handle = "modelsearch-pro"
+
+[build]
+include_config_on_deploy = true
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2025-01"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/scopes_update" ]
+  uri = "/webhooks/app/scopes_update"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://why-killing-colors-ink.trycloudflare.com/auth/callback",
+  "https://why-killing-colors-ink.trycloudflare.com/auth/shopify/callback",
+  "https://why-killing-colors-ink.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
+
+[app_proxy]
+url = "https://why-killing-colors-ink.trycloudflare.com"
+subpath = "vehicle-search-widget"
+prefix = "apps"
