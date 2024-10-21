@@ -1,0 +1,188 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Note that some adapters may set a maximum length for the String type by default, please ensure your strings are long
+// enough when changing adapters.
+// See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.sqlite"
+}
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+}
+
+// Vehicle hierarchical data models
+
+model Make {
+  id     String   @id @default(uuid())
+  name   String   @unique
+  models Model[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+}
+
+model Model {
+  id       String   @id @default(uuid())
+  name     String
+  makeId   String
+  make     Make     @relation(fields: [makeId], references: [id], onDelete: Cascade)
+  years    Year[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([name, makeId], name: "name_makeId")
+  @@index([makeId])
+  @@index([name])
+}
+
+model Year {
+  id       String     @id @default(uuid())
+  value    Int
+  modelId  String
+  model    Model      @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  submodels Submodel[]
+  fitments Fitment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([value, modelId], name: "value_modelId")
+  @@index([modelId])
+  @@index([value])
+}
+
+model Submodel {
+  id      String    @id @default(uuid())
+  name    String
+  yearId  String
+  year    Year      @relation(fields: [yearId], references: [id], onDelete: Cascade)
+  fitments Fitment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([name, yearId], name: "name_yearId")
+  @@index([yearId])
+  @@index([name])
+}
+
+// Product-vehicle associations
+
+model Product {
+  id          String    @id
+  title       String
+  handle      String
+  shop        String
+  fitments    Fitment[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([shop])
+  @@index([handle])
+}
+
+model Fitment {
+  id         String    @id @default(uuid())
+  productId  String
+  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  yearId     String
+  year       Year      @relation(fields: [yearId], references: [id], onDelete: Cascade)
+  submodelId String?
+  submodel   Submodel? @relation(fields: [submodelId], references: [id], onDelete: SetNull)
+  notes      String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([productId])
+  @@index([yearId])
+  @@index([submodelId])
+}
+
+// User settings and preferences
+
+model Settings {
+  id                     String   @id @default(uuid())
+  shop                   String   @unique
+  widgetTitle            String   @default("Find parts for your vehicle")
+  widgetPlacement        String   @default("both") // home, product, collection, both, all
+  widgetTheme            String   @default("light")
+  widgetButtonText       String   @default("Find Parts")
+  rememberVehicleEnabled Boolean  @default(true)
+  rememberDays           Int      @default(30)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
+
+// Analytics and logging data
+
+model SearchLog {
+  id            String   @id @default(uuid())
+  shop          String
+  makeId        String?
+  modelId       String?
+  yearId        String?
+  submodelId    String?
+  ipAddress     String?
+  userAgent     String?
+  searchResults Int      @default(0)
+  successful    Boolean  @default(false)
+  sessionId     String?
+  createdAt     DateTime @default(now())
+
+  @@index([shop])
+  @@index([createdAt])
+}
+
+model ProductView {
+  id        String   @id @default(uuid())
+  shop      String
+  productId String
+  makeId    String?
+  modelId   String?
+  yearId    String?
+  submodelId String?
+  sessionId String?
+  createdAt DateTime @default(now())
+
+  @@index([shop])
+  @@index([productId])
+  @@index([createdAt])
+}
+
+// Import/export job tracking
+
+model ImportJob {
+  id         String    @id @default(uuid())
+  shop       String
+  filename   String
+  status     String    @default("pending") // pending, processing, completed, failed
+  totalRows  Int       @default(0)
+  processedRows Int    @default(0)
+  errorRows  Int       @default(0)
+  errorLog   String?
+  createdAt  DateTime  @default(now())
+  completedAt DateTime?
+  
+  @@index([shop])
+  @@index([status])
+}
