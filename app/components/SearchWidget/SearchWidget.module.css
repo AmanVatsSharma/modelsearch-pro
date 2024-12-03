@@ -1,0 +1,61 @@
+.searchWidget {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Themes */
+.light {
+  background-color: var(--p-surface);
+  color: var(--p-text);
+}
+
+.dark {
+  background-color: var(--p-surface-dark);
+  color: var(--p-text-on-dark);
+}
+
+/* Responsive design */
+@media (min-width: 48em) {
+  .searchWidget {
+    max-width: 500px;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 47.9em) {
+  .searchWidget {
+    border-radius: 0;
+  }
+}
+
+/* Animation for loading states */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.loading {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Custom scrollbar for dropdowns */
+.dropdownScrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dropdownScrollable::-webkit-scrollbar-track {
+  background: var(--p-surface);
+}
+
+.dropdownScrollable::-webkit-scrollbar-thumb {
+  background-color: var(--p-border-subdued);
+  border-radius: 4px;
+}
