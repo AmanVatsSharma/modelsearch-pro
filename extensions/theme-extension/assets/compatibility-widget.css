@@ -1,0 +1,167 @@
+/**
+ * Compatibility Widget CSS for Theme Extension
+ */
+
+.compatibility-widget-container {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.compatibility-widget-header {
+  margin-bottom: 15px;
+}
+
+.compatibility-widget-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+
+/* Loading state */
+.compatibility-widget-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.compatibility-widget-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3b5998;
+  animation: compatibility-widget-spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes compatibility-widget-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error state */
+.compatibility-widget-error {
+  padding: 15px;
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  color: #c33;
+  margin-bottom: 15px;
+}
+
+/* Button */
+.compatibility-widget-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #3b5998;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.compatibility-widget-button:hover {
+  background-color: #2d4373;
+}
+
+.compatibility-widget-button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Vehicle selection */
+.compatibility-widget-vehicle-selection {
+  margin-bottom: 15px;
+}
+
+.compatibility-widget-selected-vehicle {
+  background-color: #f8f9fa;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.compatibility-widget-change-vehicle {
+  display: inline-block;
+  margin-top: 10px;
+  color: #3b5998;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Compatibility results */
+.compatibility-widget-results {
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 15px;
+}
+
+.compatibility-widget-compatible {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.compatibility-widget-incompatible {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.compatibility-widget-alternative-products {
+  margin-top: 15px;
+}
+
+.compatibility-widget-alternative-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.compatibility-widget-alternative-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.compatibility-widget-alternative-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.compatibility-widget-alternative-link {
+  color: #3b5998;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.compatibility-widget-alternative-link:hover {
+  text-decoration: underline;
+}
+
+/* No vehicle selected state */
+.compatibility-widget-no-vehicle {
+  padding: 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Vehicle selector integration */
+.compatibility-widget-select-vehicle {
+  margin-bottom: 15px;
+} 

@@ -1,0 +1,201 @@
+/**
+ * Fitment Table CSS for Theme Extension
+ */
+
+.fitment-table-container {
+  margin: 20px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.fitment-table-header {
+  margin-bottom: 15px;
+}
+
+.fitment-table-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+
+/* Loading state */
+.fitment-table-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.fitment-table-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3b5998;
+  animation: fitment-table-spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes fitment-table-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error state */
+.fitment-table-error {
+  padding: 15px;
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  color: #c33;
+  margin-bottom: 15px;
+}
+
+/* Empty state */
+.fitment-table-empty {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Search */
+.fitment-table-search {
+  margin-bottom: 15px;
+}
+
+.fitment-table-search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Table */
+.fitment-table-wrapper {
+  overflow-x: auto;
+}
+
+.fitment-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+
+.fitment-table th,
+.fitment-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.fitment-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  position: relative;
+  cursor: pointer;
+}
+
+.fitment-table th:hover {
+  background-color: #e9ecef;
+}
+
+.fitment-table th.sort-asc::after {
+  content: "↑";
+  margin-left: 5px;
+}
+
+.fitment-table th.sort-desc::after {
+  content: "↓";
+  margin-left: 5px;
+}
+
+.fitment-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.fitment-table tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Pagination */
+.fitment-table-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.fitment-table-page-info {
+  font-size: 14px;
+}
+
+.fitment-table-prev-btn,
+.fitment-table-next-btn {
+  padding: 6px 12px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.fitment-table-prev-btn:disabled,
+.fitment-table-next-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fitment-table-prev-btn:not(:disabled):hover,
+.fitment-table-next-btn:not(:disabled):hover {
+  background-color: #e9ecef;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .fitment-table thead {
+    display: none;
+  }
+  
+  .fitment-table,
+  .fitment-table tbody,
+  .fitment-table tr,
+  .fitment-table td {
+    display: block;
+    width: 100%;
+  }
+  
+  .fitment-table tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+  }
+  
+  .fitment-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .fitment-table td:last-child {
+    border-bottom: none;
+  }
+  
+  .fitment-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: 45%;
+    text-align: left;
+    font-weight: bold;
+  }
+  
+  .fitment-table-pagination {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+} 
