@@ -1,0 +1,17 @@
+name = "fitsearch-pro-theme-extensions"
+type = "theme"
+
+# Add more info about the extension
+description = "FitSearch Pro Theme Extensions for vehicle compatibility and fitment"
+runtime_context = "strict"
+
+# Define extension capabilities
+capabilities.api_access = true
+capabilities.network_access = true
+capabilities.block_progress = false
+
+# Define extension assets and settings
+metafields = [
+  { namespace = "fitsearch_pro", key = "assets_url" }
+]
+

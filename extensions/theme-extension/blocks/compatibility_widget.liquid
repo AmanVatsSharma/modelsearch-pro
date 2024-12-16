@@ -1,0 +1,123 @@
+{% comment %}
+  CompatibilityWidget block for checking if a product is compatible with a specific vehicle
+{% endcomment %}
+
+{% assign block_id = block.id | replace: "-", "_" %}
+{% assign product_id = product.id %}
+{% assign product_handle = product.handle %}
+{% assign assets_url = shop.metafields.fitsearch_pro.assets_url %}
+
+{% render 'fitsearch_pro_utils' %}
+
+<div 
+  id="compatibility-widget-{{ block_id }}"
+  class="compatibility-widget-container"
+  data-product-id="{{ product_id }}"
+  data-product-handle="{{ product_handle }}"
+  data-title="{{ block.settings.title }}"
+  data-button-text="{{ block.settings.button_text }}"
+  data-show-vehicle-selector="{{ block.settings.show_vehicle_selector }}"
+  data-show-alternatives="{{ block.settings.show_alternatives }}"
+  data-compatible-message="{{ block.settings.compatible_message }}"
+  data-incompatible-message="{{ block.settings.incompatible_message }}"
+  data-assets-url="{{ assets_url }}">
+  
+  <div class="compatibility-widget-header">
+    <h3 class="compatibility-widget-title">{{ block.settings.title }}</h3>
+  </div>
+  
+  <div class="compatibility-widget-content">
+    <div class="compatibility-widget-loading">
+      <div class="compatibility-widget-spinner"></div>
+      <p>Loading compatibility checker...</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const containerEl = document.getElementById('compatibility-widget-{{ block_id }}');
+    if (!containerEl) return;
+    
+    const assetsUrl = containerEl.getAttribute('data-assets-url');
+    if (!assetsUrl) {
+      console.error('FitSearch Pro: Missing assets URL. Please configure the app metafields.');
+      return;
+    }
+    
+    // Load CSS
+    FitSearchProUtils.loadStylesheet(assetsUrl + '/compatibility-widget.css');
+    
+    // Load JS
+    FitSearchProUtils.loadScript(assetsUrl + '/compatibility-widget.js', function() {
+      if (typeof CompatibilityWidget === 'undefined') {
+        console.error('FitSearch Pro: Failed to load CompatibilityWidget script.');
+        return;
+      }
+      
+      const productId = containerEl.getAttribute('data-product-id');
+      const productHandle = containerEl.getAttribute('data-product-handle');
+      const title = containerEl.getAttribute('data-title');
+      const buttonText = containerEl.getAttribute('data-button-text');
+      const showVehicleSelector = containerEl.getAttribute('data-show-vehicle-selector') === 'true';
+      const showAlternatives = containerEl.getAttribute('data-show-alternatives') === 'true';
+      const compatibleMessage = containerEl.getAttribute('data-compatible-message');
+      const incompatibleMessage = containerEl.getAttribute('data-incompatible-message');
+      
+      // Initialize CompatibilityWidget
+      new CompatibilityWidget({
+        container: containerEl,
+        productId: productId,
+        productHandle: productHandle,
+        title: title,
+        buttonText: buttonText,
+        showVehicleSelector: showVehicleSelector,
+        showAlternatives: showAlternatives,
+        compatibleMessage: compatibleMessage,
+        incompatibleMessage: incompatibleMessage,
+        apiBaseUrl: '{{ shop.secure_url }}/apps/fitsearch-pro'
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Compatibility Widget",
+  "target": "section",
+  "stylesheet": "compatibility-widget.css",
+  "javascript": "compatibility-widget.js",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "If not specified, the current product will be used"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Check Vehicle Compatibility"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Check Compatibility"
+    },
+    {
+      "type": "text",
+      "id": "compatible_message",
+      "label": "Compatible Message",
+      "default": "This product is compatible with your vehicle."
+    },
+    {
+      "type": "text",
+      "id": "incompatible_message",
+      "label": "Incompatible Message",
+      "default": "This product is not compatible with your vehicle."
+    }
+  ]
+}
+{% endschema %} 

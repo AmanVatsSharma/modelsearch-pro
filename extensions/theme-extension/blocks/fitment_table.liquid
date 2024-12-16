@@ -1,0 +1,167 @@
+{% comment %}
+  FitmentTable block for displaying compatible vehicles for a product
+{% endcomment %}
+
+{% assign block_id = block.id | replace: "-", "_" %}
+{% assign product_id = product.id %}
+{% assign product_handle = product.handle %}
+{% assign assets_url = shop.metafields.fitsearch_pro.assets_url %}
+
+{% render 'fitsearch_pro_utils' %}
+
+<div 
+  id="fitment-table-{{ block_id }}"
+  class="fitment-table-container"
+  data-product-id="{{ product_id }}"
+  data-product-handle="{{ product_handle }}"
+  data-title="{{ block.settings.title }}"
+  data-show-search="{{ block.settings.show_search }}"
+  data-page-size="{{ block.settings.page_size }}"
+  data-default-sort-column="{{ block.settings.default_sort_column }}"
+  data-default-sort-direction="{{ block.settings.default_sort_direction }}"
+  data-assets-url="{{ assets_url }}">
+  
+  <div class="fitment-table-header">
+    <h3 class="fitment-table-title">{{ block.settings.title }}</h3>
+  </div>
+  
+  <div class="fitment-table-content">
+    <div class="fitment-table-loading">
+      <div class="fitment-table-spinner"></div>
+      <p>Loading compatible vehicles...</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const containerEl = document.getElementById('fitment-table-{{ block_id }}');
+    if (!containerEl) return;
+    
+    const assetsUrl = containerEl.getAttribute('data-assets-url');
+    if (!assetsUrl) {
+      console.error('FitSearch Pro: Missing assets URL. Please configure the app metafields.');
+      return;
+    }
+    
+    // Load CSS
+    FitSearchProUtils.loadStylesheet(assetsUrl + '/fitment-table.css');
+    
+    // Load JS
+    FitSearchProUtils.loadScript(assetsUrl + '/fitment-table.js', function() {
+      if (typeof FitmentTable === 'undefined') {
+        console.error('FitSearch Pro: Failed to load FitmentTable script.');
+        return;
+      }
+      
+      const productId = containerEl.getAttribute('data-product-id');
+      const productHandle = containerEl.getAttribute('data-product-handle');
+      const title = containerEl.getAttribute('data-title');
+      const showSearch = containerEl.getAttribute('data-show-search') === 'true';
+      const pageSize = parseInt(containerEl.getAttribute('data-page-size'), 10) || 10;
+      const defaultSortColumn = containerEl.getAttribute('data-default-sort-column') || 'year';
+      const defaultSortDirection = containerEl.getAttribute('data-default-sort-direction') || 'desc';
+      
+      // Initialize FitmentTable
+      new FitmentTable({
+        container: containerEl,
+        productId: productId,
+        productHandle: productHandle,
+        title: title,
+        showSearch: showSearch,
+        pageSize: pageSize,
+        defaultSortColumn: defaultSortColumn,
+        defaultSortDirection: defaultSortDirection,
+        apiBaseUrl: '{{ shop.secure_url }}/apps/fitsearch-pro'
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Fitment Table",
+  "target": "section",
+  "stylesheet": "fitment-table.css",
+  "javascript": "fitment-table.js",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "If not specified, the current product will be used"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Compatible Vehicles"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search box",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "page_size",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "default": 10,
+      "label": "Items per page"
+    },
+    {
+      "type": "select",
+      "id": "default_sort_column",
+      "label": "Default Sort Column",
+      "options": [
+        {
+          "value": "year",
+          "label": "Year"
+        },
+        {
+          "value": "make",
+          "label": "Make"
+        },
+        {
+          "value": "model",
+          "label": "Model"
+        },
+        {
+          "value": "submodel",
+          "label": "Submodel"
+        }
+      ],
+      "default": "year"
+    },
+    {
+      "type": "select",
+      "id": "default_sort_direction",
+      "label": "Default Sort Direction",
+      "options": [
+        {
+          "value": "asc",
+          "label": "Ascending (A-Z, 0-9)"
+        },
+        {
+          "value": "desc",
+          "label": "Descending (Z-A, 9-0)"
+        }
+      ],
+      "default": "desc"
+    },
+    {
+      "type": "header",
+      "content": "Advanced Customization"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS",
+      "info": "Add custom CSS to style the fitment table"
+    }
+  ]
+}
+{% endschema %} 

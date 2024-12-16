@@ -1,0 +1,43 @@
+{
+  "ratings": {
+    "stars": {
+      "label": "Ratings"
+    },
+    "home": {
+      "recommendationText": "Recommended Product!"
+    }
+  },
+  "vehicle_search_widget": {
+    "title": "Find parts for your vehicle",
+    "button": "Find Parts",
+    "reset": "Reset",
+    "make": {
+      "label": "Make",
+      "placeholder": "Select Make"
+    },
+    "model": {
+      "label": "Model",
+      "placeholder": "Select Model",
+      "disabled_placeholder": "Select Make first"
+    },
+    "year": {
+      "label": "Year",
+      "placeholder": "Select Year",
+      "disabled_placeholder": "Select Model first"
+    },
+    "submodel": {
+      "label": "Submodel",
+      "placeholder": "Select Submodel (Optional)",
+      "disabled_placeholder": "Select Year first",
+      "optional_label": "(Optional)"
+    },
+    "loading": "Loading...",
+    "error": {
+      "generic": "An error occurred. Please try again.",
+      "makes": "Failed to load vehicle makes. Please try again.",
+      "models": "Failed to load vehicle models. Please try again.",
+      "years": "Failed to load vehicle years. Please try again.",
+      "submodels": "Failed to load vehicle submodels. Please try again."
+    }
+  }
+}

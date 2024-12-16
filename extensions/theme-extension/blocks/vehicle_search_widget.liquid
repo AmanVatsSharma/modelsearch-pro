@@ -1,0 +1,100 @@
+{% comment %}
+  Vehicle Search Widget - A Year/Make/Model search interface for automotive products
+{% endcomment %}
+
+<div class="vehicle-search-widget vehicle-search-widget-container"
+  data-title="{{ block.settings.title }}"
+  data-button-text="{{ block.settings.button_text }}"
+  data-theme="{{ block.settings.theme }}"
+  {% if block.settings.show_reset %}data-show-reset="true"{% endif %}
+  {% if block.settings.remember_vehicle %}data-remember="true"{% endif %}
+  data-remember-days="{{ block.settings.remember_days }}"
+  style="{% if block.settings.custom_css %}{{ block.settings.custom_css }}{% endif %}"
+>
+  <div class="vehicle-search-widget-header">
+    <h3 class="vehicle-search-widget-title">{{ block.settings.title }}</h3>
+  </div>
+  <div class="vehicle-search-widget-form">
+    <p>Loading vehicle search widget...</p>
+  </div>
+  <script 
+    src="{{ app.metafields.vehicle-search-widget.widget_script_url }}" 
+    defer
+    data-api-base-url="{{ app.metafields.vehicle-search-widget.api_base_url }}"
+  ></script>
+</div>
+
+{% schema %}
+{
+  "name": "Vehicle Search Widget",
+  "target": "section",
+  "stylesheet": "vehicle-search-widget.css",
+  "javascript": "vehicle-search-widget.js",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Widget Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Widget Title",
+      "default": "Find parts for your vehicle"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Search Button Text",
+      "default": "Find Parts"
+    },
+    {
+      "type": "select",
+      "id": "theme",
+      "label": "Widget Theme",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Advanced Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reset",
+      "label": "Show Reset Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "remember_vehicle",
+      "label": "Remember Vehicle Selection",
+      "default": true,
+      "info": "Stores the customer's vehicle selection in cookies"
+    },
+    {
+      "type": "range",
+      "id": "remember_days",
+      "label": "Days to Remember Vehicle",
+      "default": 30,
+      "min": 1,
+      "max": 100,
+      "info": "Number of days to remember the customer's vehicle selection"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS",
+      "info": "Add custom CSS to style the widget"
+    }
+  ]
+}
+{% endschema %} 
