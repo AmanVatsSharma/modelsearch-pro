@@ -173,6 +173,10 @@ export default function App() {
         <Link to="/app" rel="home">
           Home
         </Link>
+          <Link to="/app/dashboard">Dashboard</Link>
+          <Link to="/app/vehicles">Vehicle Database</Link>
+          <Link to="/app/fitments">Fitment Management</Link>
+          <Link to="/app/settings">Settings</Link>
           <Link to="/app/search">Vehicle Search Widget</Link>
           <Link to="/app/fitment">Fitment Search Widget</Link>
       </NavMenu>

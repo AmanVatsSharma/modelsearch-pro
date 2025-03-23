@@ -114,4 +114,14 @@ export async function checkFitmentExists(productId, yearId, submodelId) {
   return prisma.fitment.findFirst({
     where,
   });
+}
+
+export async function getTotalFitments(shop) {
+  return prisma.fitment.count({
+    where: {
+      product: {
+        shop
+      }
+    }
+  });
 } 

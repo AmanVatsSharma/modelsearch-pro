@@ -133,4 +133,10 @@ export async function bulkCreateMakes(data) {
     console.error(`Error bulk creating makes: ${error.message}`);
     throw error;
   }
+}
+
+export async function getAllMakes() {
+  return prisma.make.findMany({
+    orderBy: { name: "asc" },
+  });
 } 

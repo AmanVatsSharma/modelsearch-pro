@@ -140,4 +140,10 @@ export async function getCompatibleProducts(shop, makeId, modelId, yearId, submo
       totalPages: Math.ceil(count / limit),
     },
   };
+}
+
+export async function getTotalProducts(shop) {
+  return prisma.product.count({
+    where: { shop }
+  });
 } 

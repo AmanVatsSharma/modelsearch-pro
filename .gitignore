@@ -23,6 +23,6 @@ database.sqlite
 .shopify/*
 .shopify.lock
 # Agent documentation files
-docs/AGENT_*.md
-docs/HOW_TO_USE_AGENT_DOCS.md
-docs/MASTER_COORDINATION_PLAN.md
+# docs/AGENT_*.md
+# docs/HOW_TO_USE_AGENT_DOCS.md
+# docs/MASTER_COORDINATION_PLAN.md
