@@ -1,0 +1,118 @@
+{% comment %}
+  FitSearch Pro Utility Functions
+  This snippet contains shared utility functions for the FitSearch Pro theme extension components.
+{% endcomment %}
+
+<script>
+  window.FitSearchProUtils = {
+    // Load external scripts dynamically
+    loadScript: function(url, callback) {
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = url;
+      script.onload = callback || function() {};
+      document.head.appendChild(script);
+    },
+
+    // Load external stylesheets dynamically
+    loadStylesheet: function(url) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = url;
+      document.head.appendChild(link);
+    },
+
+    // Get product ID from various sources
+    getProductId: function() {
+      // Try to get from URL first (most reliable for product pages)
+      const urlMatch = window.location.pathname.match(/\/products\/([^\/]+)(?:\/|\?|$)/);
+      if (urlMatch && urlMatch[1]) {
+        return this.getProductIdFromHandle(urlMatch[1]);
+      }
+      
+      // Try to get from meta tags
+      const metaTag = document.querySelector('meta[property="product:product_id"]');
+      if (metaTag) {
+        return metaTag.getAttribute('content');
+      }
+      
+      // Try to get from JSON data in the page
+      const productJsonScript = document.getElementById('ProductJson-product-template');
+      if (productJsonScript) {
+        try {
+          const productData = JSON.parse(productJsonScript.textContent);
+          return productData.id;
+        } catch (e) {
+          console.error('Failed to parse product JSON:', e);
+        }
+      }
+      
+      return null;
+    },
+    
+    // Get product handle from URL
+    getProductHandle: function() {
+      const urlMatch = window.location.pathname.match(/\/products\/([^\/]+)(?:\/|\?|$)/);
+      return urlMatch && urlMatch[1] ? urlMatch[1] : null;
+    },
+    
+    // Get product ID from handle using the Shopify API
+    getProductIdFromHandle: function(handle) {
+      // This would usually require an API call
+      // For theme extension, we'll need to rely on merchant setting this up
+      return null;
+    },
+    
+    // Format date to YYYY-MM-DD
+    formatDate: function(date) {
+      return date.toISOString().split('T')[0];
+    },
+    
+    // Format a vehicle object into a readable string
+    formatVehicle: function(vehicle) {
+      if (!vehicle) return '';
+      
+      let parts = [];
+      if (vehicle.year) parts.push(vehicle.year);
+      if (vehicle.make) parts.push(vehicle.make);
+      if (vehicle.model) parts.push(vehicle.model);
+      if (vehicle.submodel) parts.push(vehicle.submodel);
+      
+      return parts.join(' ');
+    },
+    
+    // Save vehicle to localStorage
+    saveVehicle: function(vehicle) {
+      if (!vehicle) return;
+      localStorage.setItem('fitsearch_pro_vehicle', JSON.stringify(vehicle));
+    },
+    
+    // Get saved vehicle from localStorage
+    getSavedVehicle: function() {
+      try {
+        const savedVehicle = localStorage.getItem('fitsearch_pro_vehicle');
+        return savedVehicle ? JSON.parse(savedVehicle) : null;
+      } catch (e) {
+        console.error('Failed to parse saved vehicle:', e);
+        return null;
+      }
+    },
+    
+    // Clear saved vehicle from localStorage
+    clearSavedVehicle: function() {
+      localStorage.removeItem('fitsearch_pro_vehicle');
+    },
+    
+    // Create a URL with query parameters
+    buildUrl: function(base, params) {
+      const url = new URL(base);
+      Object.keys(params).forEach(key => {
+        if (params[key] !== null && params[key] !== undefined) {
+          url.searchParams.append(key, params[key]);
+        }
+      });
+      return url.toString();
+    }
+  };
+</script> 

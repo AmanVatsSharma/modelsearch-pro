@@ -1,0 +1,100 @@
+/* FitmentTable.module.css */
+
+.clickableRow {
+  cursor: pointer;
+}
+
+.fitmentTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fitmentTable th {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid var(--p-border-subdued);
+  cursor: pointer;
+}
+
+.fitmentTable th:hover {
+  background-color: var(--p-surface-hovered);
+}
+
+.fitmentTable td {
+  padding: 10px;
+  border-bottom: 1px solid var(--p-border-subdued);
+}
+
+.fitmentTable tr:last-child td {
+  border-bottom: none;
+}
+
+.fitmentTable tr:hover td {
+  background-color: var(--p-surface-hovered);
+}
+
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.sortIcon {
+  margin-left: 4px;
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.paginationButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.searchField {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .fitmentTable thead {
+    display: none;
+  }
+  
+  .fitmentTable tr {
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid var(--p-border-subdued);
+    border-radius: 4px;
+  }
+  
+  .fitmentTable td {
+    display: flex;
+    padding: 8px 10px;
+    border: none;
+    border-bottom: 1px solid var(--p-border-subdued);
+  }
+  
+  .fitmentTable td:before {
+    content: attr(data-label);
+    flex: 0 0 30%;
+    font-weight: 500;
+  }
+  
+  .fitmentTable tr:last-child td:last-child {
+    border-bottom: none;
+  }
+  
+  .paginationControls {
+    flex-direction: column;
+    gap: 8px;
+  }
+} 

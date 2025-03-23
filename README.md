@@ -119,8 +119,10 @@ npm run build
 
 ### 3. Fitment Tables & Compatibility Widget
 
-- `app/components/compatibility/`: Compatibility components
-- `app/routes/compatibility/`: Frontend routes
+- `app/components/FitmentTable/`: Fitment table component for displaying all compatible vehicles
+- `app/components/CompatibilityWidget/`: Widget for checking if a product is compatible with a specific vehicle
+- `app/routes/app.fitment.jsx`: Demo page showcasing both components
+- `app/routes/api.products.$productId.fitments.js`: API endpoint for retrieving fitment data
 
 ### 4. Admin Dashboard
 

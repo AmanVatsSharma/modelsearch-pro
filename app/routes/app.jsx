@@ -174,6 +174,7 @@ export default function App() {
           Home
         </Link>
           <Link to="/app/search">Vehicle Search Widget</Link>
+          <Link to="/app/fitment">Fitment Search Widget</Link>
       </NavMenu>
         
         {showBanner && (

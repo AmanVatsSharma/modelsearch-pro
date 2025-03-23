@@ -317,6 +317,7 @@ export async function loader({ request }) {
           const apiBaseUrl = getApiBaseUrl(container, settings);
           
           // Create the full API URL with proper app proxy format if needed
+
           const url = createApiUrl(apiBaseUrl, \`/api/vehicle/models?makeId=${makeId}\`, {
             t: timestamp
           });
