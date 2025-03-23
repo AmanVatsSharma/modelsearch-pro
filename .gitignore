@@ -22,3 +22,7 @@ database.sqlite
 # Ignore shopify files created during app dev
 .shopify/*
 .shopify.lock
+# Agent documentation files
+docs/AGENT_*.md
+docs/HOW_TO_USE_AGENT_DOCS.md
+docs/MASTER_COORDINATION_PLAN.md
